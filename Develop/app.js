@@ -2,6 +2,9 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
+app.use(express.json());
+
+let notes = [];
 
 // Serve static files (HTML, CSS, JS, images) from the 'public' directory
 // Path.join and _dirname are all there to make the path to the public folder
@@ -10,7 +13,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Route for the notes page
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'notes.html'));
-    console.log("/notes");
 });
 
 app.get('/api/notes', (req, res) => {
@@ -18,13 +20,25 @@ app.get('/api/notes', (req, res) => {
         if (err) {
             res.status(500).send('Error reading JSON file');
         } else {
-            res.json(JSON.parse(data));
+            notes = JSON.parse(data);
+            res.json(notes);
         }
     });
 })
 
-app.post('api/notes', (req, res) => {
-    
+app.post('/api/notes', (req, res) => {
+    const noteTitle = req.body.title;
+    const noteText = req.body.text;
+    const noteId = notes[notes.length - 1].id + 1;
+    const newNote = {
+        id: noteId,
+        title: noteTitle,
+        text: noteText
+    }
+    notes.push(newNote);
+    fs.writeFile('db/db.json', JSON.stringify(notes), (err) =>
+    err ? console.error(err) : console.log('Success!'))
+    res.json(newNote);
 })
 const PORT = process.env.PORT || 3000;
 
