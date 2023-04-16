@@ -7,6 +7,9 @@ This is a note taking app. You can start by pressing the 'Get Started' button. I
 ## License
 MIT License (MIT)
 
+## Deployed URL
+Heroku: https://module-11-note-taker.herokuapp.com
+
 ## Questions
 [GitHub Profile](https://github.com/madiscercy) 
 If you have any further questions, feel free to reach out to my email: 
