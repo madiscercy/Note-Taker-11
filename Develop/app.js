@@ -6,11 +6,9 @@ app.use(express.json());
 
 let notes = [];
 
-// Serve static files (HTML, CSS, JS, images) from the 'public' directory
 // Path.join and _dirname are all there to make the path to the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route for the notes page
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
